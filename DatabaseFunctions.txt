@@ -1,0 +1,92 @@
+// Connect to HSQLdb - 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+************************************************************************
+public class ConnectDatabase {
+
+   Connection con = null;
+   Statement stmt = null;
+	
+   public static connection fnConnecttoDatabase() {      
+      try {
+         //Registering the HSQLDB JDBC driver
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         //Creating the connection with HSQLDB
+         con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         if (con!= null){
+            System.out.println("Connection created successfully");
+            
+         }else{
+            System.out.println("Problem with creating connection");
+         }
+      
+      }  catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+	return con
+   }
+
+**************************************************************************************
+  public static void fnCreateTable(){
+
+	ResultSet rs = null;
+	try{
+
+	con = fnConnecttoDatabase();
+	stmt = con.createStatement();
+        result = stmt.executeUpdate("CREATE TABLE logFile_tbl (
+            Eventid VARCHAR(20) NOT NULL, EventDuration VARCHAR(5) NOT NULL,
+            ALERT VARCHAR(20) NOT NULL,
+            PRIMARY KEY (Eventid));
+         ");
+	}catch(Exception e){
+	  e.printStackTrace(System.out);
+	}
+finally{
+	    if (rs != null) {
+        try {
+            rs.close();
+        } catch (SQLException e) { 
+	}
+	if (conn != null) {
+        try {
+            conn.close();
+        } catch (SQLException e) { /* Ignored */}
+    }
+    }
+System.out.println("Table created successfully");	
+}
+
+************************************************************************
+ public static void FnInsertinDB() { 
+     
+      ResultSet rs = null; 
+      try { 
+         con = fnConnecttoDatabase();
+         stmt = con.createStatement(); 
+         result = stmt.executeUpdate("INSERT INTO logFile_tbl  
+            VALUES (allList.get(0),allList.get(1),allList.get(2)); 
+         con.commit(); 
+      }catch (Exception e) { 
+         e.printStackTrace(System.out); 
+      } 
+finally{
+	    if (rs != null) {
+        try {
+            rs.close();
+        } catch (SQLException e) { 
+	}
+	if (conn != null) {
+        try {
+            conn.close();
+        } catch (SQLException e) { /* Ignored */}
+    }
+    }
+
+}
+      System.out.println(result+" rows effected"); 
+      System.out.println("Rows inserted successfully"); 
+   } 
